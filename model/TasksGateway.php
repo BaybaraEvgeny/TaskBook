@@ -22,18 +22,18 @@ class TasksGateway extends Database
 
         $pdo = Database::connect($order);
 
-        $no_of_records_per_page = 3;
-        $total_pages_sql = "SELECT COUNT(*) AS count FROM tasks";
-        $result = $pdo->prepare($total_pages_sql);
+        $noOfRecordsPerPage = 3;
+        $totalPagesSql = "SELECT COUNT(*) AS count FROM tasks";
+        $result = $pdo->prepare($totalPagesSql);
         $result->execute();
-        $total_rows = $result->fetch(PDO::FETCH_OBJ)->count;
-        if (!is_numeric($page) || $page <= 0 || $page > $total_rows) {
+        $totalRows = $result->fetch(PDO::FETCH_OBJ)->count;
+        if (!is_numeric($page) || $page <= 0 || $page > $totalRows) {
             $page = 1;
         }
-        $offset = ($page - 1) * $no_of_records_per_page;
-        $total_pages = (int)ceil($total_rows / $no_of_records_per_page);
+        $offset = ($page - 1) * $noOfRecordsPerPage;
+        $totalPages = (int)ceil($totalRows / $noOfRecordsPerPage);
 
-        $sql = $pdo->prepare("SELECT * FROM tasks $order LIMIT $offset, $no_of_records_per_page");
+        $sql = $pdo->prepare("SELECT * FROM tasks $order LIMIT $offset, $noOfRecordsPerPage");
         $sql->execute();
         // $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
@@ -41,7 +41,7 @@ class TasksGateway extends Database
         while ($obj = $sql->fetch(PDO::FETCH_OBJ)) {
             $tasks[] = $obj;
         }
-        return ['tasks' => $tasks, 'total_pages' => $total_pages, 'page' => $page];
+        return ['tasks' => $tasks, 'total_pages' => $totalPages, 'page' => $page];
     }
 
     public function selectById($id)
@@ -91,8 +91,8 @@ class TasksGateway extends Database
         $check = $pdo->prepare("SELECT done FROM tasks WHERE id = ?");
         $check->bindValue(1, $id);
         $check->execute();
-        $check_result = $check->fetch(PDO::FETCH_OBJ)->done;
-        if ($check_result) {
+        $checkResult = $check->fetch(PDO::FETCH_OBJ)->done;
+        if ($checkResult) {
             return 0;
         } else {
             $sql = $pdo->prepare("UPDATE tasks SET done = true WHERE id = ? LIMIT 1");
