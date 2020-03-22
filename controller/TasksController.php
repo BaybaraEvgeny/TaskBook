@@ -26,7 +26,7 @@ class TasksController
         $data = $this->TasksService->getAllTasks($orderby, $page, $directGet);
 
         $tasks = $data['tasks'];
-        $total_pages = $data['total_pages'];
+        $totalPages = $data['total_pages'];
         $page = $data['page'];
 
         if (isset($_GET['direct']) && $_GET['direct'] === 'asc') {
