@@ -141,13 +141,13 @@
                 <li class="page-item active">
                     <a class="page-link"><?= $page ?></a>
                 </li>
-                <li class="page-item <?= $page >= $total_pages ? 'disabled' : '' ?>">
+                <li class="page-item <?= $page >= $totalPages ? 'disabled' : '' ?>">
                     <a class="page-link"
-                       href="?<?= $page >= $total_pages ? '' : http_build_query(['page' => $page + 1] + $_GET) ?>"
+                       href="?<?= $page >= $totalPages ? '' : http_build_query(['page' => $page + 1] + $_GET) ?>"
                     >Next</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="?<?= http_build_query(['page' => $total_pages] + $_GET) ?>">Last</a>
+                    <a class="page-link" href="?<?= http_build_query(['page' => $totalPages] + $_GET) ?>">Last</a>
                 </li>
             </ul>
         </nav>
